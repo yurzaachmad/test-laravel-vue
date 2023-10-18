@@ -24,9 +24,9 @@ return new class extends Migration
         });
 
         Schema::table('contracts', function($table) {
-            $table->foreign('nip')->references('nip')->on('dosens')->onDelete('cascade');
-            $table->foreign('idStudy')->references('idStudy')->on('studies')->onDelete('cascade');
-            $table->foreign('nim')->references('nim')->on('users')->onDelete('cascade');
+            $table->foreign('nip')->references('nip')->on('dosens');
+            $table->foreign('idStudy')->references('idStudy')->on('studies');
+            $table->foreign('nim')->references('nim')->on('users');
         });
     }
 

@@ -40,6 +40,30 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="role" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                <input class="form-check-input @error('role') is-invalid @enderror" type="radio" name="flexRadioDefault" id="administrator" value="{{ old('administrator') }}">
+                                <label class="form-check-label" for="administrator">
+                                    Administrator
+                                </label>
+                                </div>
+                                <div class="form-check">
+                                <input class="form-check-input @error('role') is-invalid @enderror" type="radio" name="flexRadioDefault" id="operator" value="{{ old('operator') }}">
+                                <label class="form-check-label" for="operator">
+                                    Operator
+                                </label>
+                            </div>
+                                @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">

@@ -120,7 +120,8 @@ export default {
                     location.reload();
                 })
                 .catch((error) => {
-                    console.log("Error", error);
+                    console.log("Error", error.response.data.message);
+                    swal(error.response.data.message);
                 });
         }
 
