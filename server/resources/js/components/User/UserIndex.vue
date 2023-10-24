@@ -7,6 +7,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">NIM</th>
                 <th scope="col">Major</th>
+                <th scope="col">Role</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -45,6 +46,14 @@
                     />
                 </td>
                 <td v-else>{{ user.idMajor }}</td>
+                <td v-if="user.isEdit">
+                    <input
+                        :value="user.role"
+                        @input="user.role = $event.target.value"
+                        style="width: 80%"
+                    />
+                </td>
+                <td v-else>{{ user.role }}</td>
                 <td>
                     <button
                         type="button"
