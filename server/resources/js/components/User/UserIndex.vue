@@ -22,38 +22,44 @@
                     />
                 </td>
                 <td v-else>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.nim }}</td>
                 <td v-if="user.isEdit">
-                    <input
-                        :value="user.email"
-                        @input="user.email = $event.target.value"
-                        style="width: 60%"
-                    />
-                </td>
-                <td v-else>{{ user.email }}</td>
-                <td v-if="user.isEdit">
-                    <input
-                        :value="user.nim"
-                        @input="user.nim = $event.target.value"
-                        style="width: 80%"
-                    />
-                </td>
-                <td v-else>{{ user.nim }}</td>
-                <td v-if="user.isEdit">
-                    <input
+                    <tr v-for="major in majors" :key="major.id">
+                        <!-- <input
                         :value="user.idMajor"
                         @input="user.idMajor = $event.target.value"
                         style="width: 80%"
-                    />
+                    /> -->
+                        <div class="row mb-3">
+                            <!-- <label for="role" class="col-md-4 col-form-label text-md-end">{{ major.nameMajor }}</label> -->
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input
+                                        :id="major.nameMajor"
+                                        type="radio"
+                                        class="form-check-input"
+                                        name="role"
+                                        :value="major.idMajor"
+                                        required
+                                        autocomplete="role"
+                                        @input="
+                                            major.idMajor = $event.target.value
+                                        "
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        :for="major.nameMajor"
+                                    >
+                                        {{ major.nameMajor }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </tr>
                 </td>
                 <td v-else>{{ user.idMajor }}</td>
-                <td v-if="user.isEdit">
-                    <input
-                        :value="user.role"
-                        @input="user.role = $event.target.value"
-                        style="width: 80%"
-                    />
-                </td>
-                <td v-else>{{ user.role }}</td>
+                <td>{{ user.role }}</td>
                 <td>
                     <button
                         type="button"
@@ -88,6 +94,7 @@ import { ref, onMounted } from "vue";
 export default {
     setup() {
         const users = ref([]);
+        const majors = ref([]);
 
         const toggleEdit = (item) => {
             item.isEdit = !item.isEdit;
@@ -108,6 +115,8 @@ export default {
                 });
         }
 
+        console.log(majors, "ini", users, "inii");
+
         onMounted(() => {
             axios
                 .get("/api/users")
@@ -120,10 +129,23 @@ export default {
                 .catch((error) => {
                     console.log("Error", error);
                 });
+
+            axios
+                .get(`/api/majors`)
+                .then((response) => {
+                    majors.value = response.data.data.data.map((item) => ({
+                        ...item,
+                    }));
+                })
+                .catch((error) => {
+                    console.log("Error", error.response.data.message);
+                    swal(error.response.data.message);
+                });
         });
 
         return {
             users,
+            majors,
             toggleEdit,
             showConfirmDialog,
             removeContract,
